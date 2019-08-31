@@ -8,8 +8,7 @@ import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.StdStats;
 
 public class PercolationStats {
-    private final double[] ans;
-    private final int trials;
+    private static final double DOUBLECONFIDENCE_95 = 1.96;
     private final double mean;
     private final double stddev;
     private final double lo;
@@ -18,13 +17,12 @@ public class PercolationStats {
     // perform independent trials on an n-by-n grid
     public PercolationStats(int n, int trials) {
         if (n <= 0 || trials <= 0) throw new IllegalArgumentException();
-        this.trials = trials;
-        ans = new double[this.trials];
-        for (int t = 0; t < this.trials; t++) ans[t] = makeTrial(n);
+        double[] ans = new double[trials];
+        for (int t = 0; t < trials; t++) ans[t] = makeTrial(n);
         mean = StdStats.mean(ans);
         stddev = StdStats.stddev(ans);
-        lo = mean() - 1.96 * stddev() / Math.sqrt(trials);
-        hi = mean() + 1.96 * stddev() / Math.sqrt(trials);
+        lo = mean() - DOUBLECONFIDENCE_95 * stddev() / Math.sqrt(trials);
+        hi = mean() + DOUBLECONFIDENCE_95 * stddev() / Math.sqrt(trials);
     }
 
     private double makeTrial(int n) {
