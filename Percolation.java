@@ -61,7 +61,7 @@ public class Percolation {
     // is the site (row, col) full?
     public boolean isFull(int row, int col) {
         if (row < 1 || col < 1) throw new IllegalArgumentException();
-        return weightedQuickUnionUF.connected(0, index(row, col));
+        return isOpen(row, col) && weightedQuickUnionUF.connected(0, index(row, col));
     }
 
     // returns the number of open sites
