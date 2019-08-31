@@ -4,10 +4,8 @@
  *  Last modified:     1/1/2019
  **************************************************************************** */
 
+import edu.princeton.cs.algs4.SET;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
-
-import java.util.LinkedList;
-import java.util.List;
 
 public class Percolation {
 
@@ -36,7 +34,7 @@ public class Percolation {
 
         numberOfOpenSites++;
         opened[indexOpened(row, col)] = true;
-        List<Integer> openNeigbours = new LinkedList<>();
+        SET<Integer> openNeigbours = new SET<Integer>();
 
         if (row + 1 <= n && isOpen(row + 1, col)) openNeigbours.add(index(row + 1, col));
         if (row - 1 >= 1 && isOpen(row - 1, col)) openNeigbours.add(index(row - 1, col));
