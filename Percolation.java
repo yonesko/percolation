@@ -28,7 +28,7 @@ public class Percolation {
 
     // opens the site (row, col) if it is not open already
     public void open(int row, int col) {
-        if (row < 1 || col < 1) throw new IllegalArgumentException();
+        validateCoords(row, col);
         if (isOpen(row, col)) return;
 
         numberOfOpenSites++;
@@ -44,7 +44,7 @@ public class Percolation {
     }
 
     private int index(int row, int col) {
-        if (row < 1 || col < 1 || row > n || col > n) throw new IllegalArgumentException();
+        validateCoords(row, col);
         return (row - 1) * n + (col - 1) + 1;
     }
 
@@ -52,15 +52,19 @@ public class Percolation {
         return (row - 1) * n + (col - 1);
     }
 
+    private void validateCoords(int row, int col) {
+        if (row < 1 || col < 1 || row > n || col > n) throw new IllegalArgumentException();
+    }
+
     // is the site (row, col) open?
     public boolean isOpen(int row, int col) {
-        if (row < 1 || col < 1) throw new IllegalArgumentException();
+        validateCoords(row, col);
         return opened[indexOpened(row, col)];
     }
 
     // is the site (row, col) full?
     public boolean isFull(int row, int col) {
-        if (row < 1 || col < 1) throw new IllegalArgumentException();
+        validateCoords(row, col);
         return isOpen(row, col) && weightedQuickUnionUF.connected(0, index(row, col));
     }
 
@@ -71,7 +75,7 @@ public class Percolation {
 
     // does the system percolate?
     public boolean percolates() {
-        return weightedQuickUnionUF.connected(0, index(n, n) + 1);
+        return numberOfOpenSites > 0 && weightedQuickUnionUF.connected(0, index(n, n) + 1);
     }
 
     // test client (optional)
