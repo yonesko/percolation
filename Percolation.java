@@ -34,7 +34,8 @@ public class Percolation {
         if (row < 1 || col < 1) throw new IllegalArgumentException();
         if (isOpen(row, col)) return;
 
-        openOne(indexOpened(row, col));
+        numberOfOpenSites++;
+        opened[indexOpened(row, col)] = true;
         List<Integer> openNeigbours = new LinkedList<>();
 
         if (row + 1 <= n && isOpen(row + 1, col)) openNeigbours.add(index(row + 1, col));
@@ -43,14 +44,8 @@ public class Percolation {
         if (col - 1 >= 1 && isOpen(row, col - 1)) openNeigbours.add(index(row, col - 1));
 
         for (Integer openNeigbour : openNeigbours) {
-            openOne(openNeigbour - 1);
             weightedQuickUnionUF.union(index(row, col), openNeigbour);
         }
-    }
-
-    private void openOne(int i) {
-        numberOfOpenSites++;
-        opened[i] = true;
     }
 
     private int index(int row, int col) {
