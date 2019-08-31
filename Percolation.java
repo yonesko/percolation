@@ -4,7 +4,6 @@
  *  Last modified:     1/1/2019
  **************************************************************************** */
 
-import edu.princeton.cs.algs4.SET;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
@@ -34,16 +33,14 @@ public class Percolation {
 
         numberOfOpenSites++;
         opened[indexOpened(row, col)] = true;
-        SET<Integer> openNeigbours = new SET<Integer>();
-
-        if (row + 1 <= n && isOpen(row + 1, col)) openNeigbours.add(index(row + 1, col));
-        if (row - 1 >= 1 && isOpen(row - 1, col)) openNeigbours.add(index(row - 1, col));
-        if (col + 1 <= n && isOpen(row, col + 1)) openNeigbours.add(index(row, col + 1));
-        if (col - 1 >= 1 && isOpen(row, col - 1)) openNeigbours.add(index(row, col - 1));
-
-        for (Integer openNeigbour : openNeigbours) {
-            weightedQuickUnionUF.union(index(row, col), openNeigbour);
-        }
+        if (row + 1 <= n && isOpen(row + 1, col))
+            weightedQuickUnionUF.union(index(row, col), index(row + 1, col));
+        if (row - 1 >= 1 && isOpen(row - 1, col))
+            weightedQuickUnionUF.union(index(row, col), index(row - 1, col));
+        if (col + 1 <= n && isOpen(row, col + 1))
+            weightedQuickUnionUF.union(index(row, col), index(row, col + 1));
+        if (col - 1 >= 1 && isOpen(row, col - 1))
+            weightedQuickUnionUF.union(index(row, col), index(row, col - 1));
     }
 
     private int index(int row, int col) {
